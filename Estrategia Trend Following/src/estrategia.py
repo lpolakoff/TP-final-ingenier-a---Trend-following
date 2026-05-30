@@ -347,7 +347,9 @@ def calcular_metricas(resultados, label="Estrategia"):
     Retorna dict con las métricas calculadas.
     """
     rets     = resultados["retornos_port"]
-    equity   = resultados.get("equity_curve") or (1 + rets).cumprod()
+    equity   = resultados.get("equity_curve")
+    if equity is None:
+        equity = (1 + rets).cumprod()
     turnover = resultados["turnover_mensual"]
 
     mean_a  = rets.mean() * 252
